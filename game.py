@@ -1,20 +1,22 @@
-# Adding a sense that the cars are moving
 from addons import car
 import pygame
 import time
 import random
 
 pygame.init()
+
 # resolution of the game
 display_width = 800
 display_height = 600
 
-black = (0,0,0)
-white = (255, 255, 255)
-red = (255, 0, 0)
-car_width = 40
-GRAY = (51,51,51)
+# Game colors
+BLACK = (0,0,0)
+RED = (255, 0, 0)
+GRAY = (51, 51, 51)
 WHITE = (255, 255, 255)
+
+car_width = 40
+
 
 gameDisplay = pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption('Brick Drifter')
@@ -24,14 +26,12 @@ carImg = pygame.image.load('nu.png')
 
 def things_dodged(count):
     font = pygame.font.SysFont(None, 25)
-    text = font.render("Dodged: "+ str(count), True, red )
+    text = font.render("Dodged: "+ str(count), True, RED )
     gameDisplay.blit(text, (0,0))
-
 
 def things(thingx, thingy, thingw, thingh, color):
     # pygame draw
     pygame.draw.rect(gameDisplay, color, [thingx, thingy, thingw, thingh])
-
 
 #def car(x,y):
     # blit draws the background in the image and takes in the car and where ( a tuple)
@@ -39,7 +39,7 @@ def things(thingx, thingy, thingw, thingh, color):
 
 def text_objects(text, font):
     # True for anti aliasing
-    textSurface = font.render(text, True, black)
+    textSurface = font.render(text, True, BLACK)
     return textSurface, textSurface.get_rect()
 
 def message_display(text):
@@ -56,7 +56,6 @@ def message_display(text):
 
 def crash():
     message_display('You Crashed')
-
 
 def game_loop():
     x = (display_width * 0.45)
@@ -91,14 +90,13 @@ def game_loop():
     stripe_gap = 70
     speed = 1
     second = 0
-    while not gameExit:
 
+    while not gameExit:
         # creates a list of an event per second mouse clicks, keyboard
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 #if there is a key press
-
 
         keys = pygame.key.get_pressed()
         x_change = 0
@@ -109,7 +107,7 @@ def game_loop():
             playerCar.moveRight(15 * speed_factor)
         x += x_change
 
-        #Drawing on Screen
+        # Drawing on Screen
         gameDisplay.fill(black)
         pygame.draw.rect(gameDisplay, GRAY, [0,0, 480,600])
 
@@ -127,12 +125,10 @@ def game_loop():
         stripe_y += speed
 
         # things(thingx, thingy, thingw, thingh, color)
-        things(thing_startx, thing_starty, thing_width, thing_height, red)
+        things(thing_startx, thing_starty, thing_width, thing_height, RED)
         thing_starty += thing_speed
-        #car(x,y)
+        # car(x,y)
         things_dodged(dodged)
-
-
 
         all_sprites_list.draw(gameDisplay)
 
@@ -158,7 +154,7 @@ def game_loop():
 
 
         if playerCar.rect.y < thing_starty + thing_height:
-            #x is the location of car (If top left of car is greater than box)
+            # x is the location of car (If top left of car is greater than box)
             if playerCar.rect.x > thing_startx and playerCar.rect.x < thing_startx + thing_width or playerCar.rect.x + playerCar.rect.width > thing_startx and playerCar.rect.x + playerCar.rect.width < thing_startx + thing_width:
                 crash()
         # updates display.update after event takes an arg or updates all
