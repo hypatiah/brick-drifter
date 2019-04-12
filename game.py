@@ -12,7 +12,7 @@ display_height = 600
 black = (0,0,0)
 white = (255, 255, 255)
 red = (255, 0, 0)
-car_width = 73
+car_width = 40
 GRAY = (51,51,51)
 WHITE = (255, 255, 255)
 
@@ -67,7 +67,7 @@ def game_loop():
 
     x_change = 0
 
-    thing_startx = random.randrange(0, gameAreaX)
+    thing_startx = random.randrange(0, gameAreaX - 40)
     print(thing_startx)
     thing_starty = -600
     thing_speed = 7
@@ -105,9 +105,9 @@ def game_loop():
         x_change = 0
         speed_factor = 0.1 + speed/100
         if keys[pygame.K_LEFT]:
-            playerCar.moveLeft(10 * speed_factor)
+            playerCar.moveLeft(15 * speed_factor)
         if keys[pygame.K_RIGHT]:
-            playerCar.moveRight(10 * speed_factor)
+            playerCar.moveRight(15 * speed_factor)
         x += x_change
 
         #Drawing on Screen
@@ -146,23 +146,21 @@ def game_loop():
                 speed = 100
             second = 0
         second +=1
-        
+
         if x > gameAreaX - playerCar.rect.width or x < 0:
             crash()
             # after box leaves the screen
         if thing_starty > display_height:
             thing_starty = 0 - thing_height
-            thing_startx = random.randrange(0, gameAreaX)
+            thing_startx = random.randrange(0, gameAreaX - 40)
             dodged += 1
             thing_speed += 0.5
 
 
 
-        if y < thing_starty + thing_height:
-            print('y crossover')
+        if playerCar.rect.y < thing_starty + thing_height:
             #x is the location of car (If top left of car is greater than box)
-            if x > thing_startx and x < thing_startx + thing_width or x + playerCar.rect.width > thing_startx and x + playerCar.rect.width < thing_startx + thing_width:
-                print('x crossover')
+            if playerCar.rect.x > thing_startx and playerCar.rect.x < thing_startx + thing_width or playerCar.rect.x + playerCar.rect.width > thing_startx and playerCar.rect.x + playerCar.rect.width < thing_startx + thing_width:
                 crash()
         # updates display.update after event takes an arg or updates all
         # pygame.display.flip () always updates the entire thing
