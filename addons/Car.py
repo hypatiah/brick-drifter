@@ -20,8 +20,22 @@ class Car(pygame.sprite.Sprite):
         # Fetch the rectangle object that has the dimensions of the image.
         self.rect = self.image.get_rect()
 
+        self.angle = 0
+
+    def leftTurn(self):
+        self.image = pygame.transform.rotate(self.image, 10)
+        self.angle += 10
+
     def moveRight(self, pixels):
         self.rect.x += pixels
 
+    def leftTurn(self):
+        self.image = pygame.transform.rotate(self.image, -10)
+        self.angle -= 10
+
     def moveLeft(self, pixels):
         self.rect.x -= pixels
+
+    def straight(self):
+        self.image = pygame.transform.rotate(self.image, -self.angle)
+        self.angle = 0

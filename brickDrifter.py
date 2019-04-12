@@ -167,8 +167,8 @@ def game_loop():
         #pygame.display.update()
         if second >= 60:
             speed += 1
-            if speed > 50:
-                speed = 50
+            if speed > 100:
+                speed = 100
             second = 0
         second +=1
         #how fast are you going to finish a task
