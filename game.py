@@ -59,7 +59,6 @@ def crash():
 
 
 def game_loop():
-
     x = (display_width * 0.45)
     y = (display_height * 0.8)
 
