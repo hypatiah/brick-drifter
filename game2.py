@@ -11,7 +11,7 @@ display_height = 600
 
 black = (0,0,0)
 white = (255, 255, 255)
-RED = (255, 0, 0)
+red = (255, 0, 0)
 car_width = 73
 
 gameDisplay = pygame.display.set_mode((display_width,display_height))
@@ -20,15 +20,19 @@ clock = pygame.time.Clock()
 
 carImg = pygame.image.load('nu.png')
 
+def things_dodged(count):
+    font = pygame.font.SysFont(None, 25)
+    text = font.render("Dodged: "+ str(count), True, red )
+    gameDisplay.blit(text, (0,0))
+
+
 def things(thingx, thingy, thingw, thingh, color):
     #pygame draw
     pygame.draw.rect(gameDisplay, color, [thingx, thingy, thingw, thingh])
 
 
-
-
 def car(x,y):
-    #blit draws the background in the image tajes in the image and where(tuple)
+    #blit draws the background in the image and takes in the car and where ( a tuple)
     gameDisplay.blit(carImg,(x,y))
 
 def text_objects(text, font):
@@ -65,6 +69,9 @@ def game_loop():
     thing_width = 100
     thing_height = 100
 
+    thingCount = 1
+    dodged = 0
+
     gameExit = False
 
     while not gameExit:
@@ -90,6 +97,7 @@ def game_loop():
         things(thing_startx, thing_starty, thing_width, thing_height, black)
         thing_starty += thing_speed
         car(x,y)
+        things_dodged(dodged)
 
         if x > display_width - car_width or x < 0:
             crash()
@@ -97,7 +105,17 @@ def game_loop():
         if thing_starty > display_height:
             thing_starty = 0 - thing_height
             thing_startx = random.randrange(0, display_width)
+            dodged += 1
+            thing_speed += 0.5
 
+
+
+        if y < thing_starty + thing_height:
+            print('y crossover')
+            #x is the location of car (If top left of car is greater than box)
+            if x > thing_startx and x < thing_startx + thing_width or x + car_width > thing_startx and x + car_width < thing_startx + thing_width:
+                print('x crossover')
+                crash()
         #updates display.update after event takes an arg or updates all
         #pygame.display.flip () always updates the entire thing
         pygame.display.update()
