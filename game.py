@@ -24,14 +24,14 @@ class Game:
         self.high_score = 0
 
     def show_dodged(self):
-        font = pygame.font.SysFont(None, 25)
+        font = pygame.font.SysFont(None, 35)
         text = font.render("Dodged: "+ str(self.dodged), True, RED )
-        self.gameDisplay.blit(text, (500, 20))
+        self.gameDisplay.blit(text, (520, 20))
 
     def show_high_score(self):
-        font = pygame.font.SysFont(None, 25)
+        font = pygame.font.SysFont(None, 35)
         text = font.render("High Score: "+ str(self.high_score), True, WHITE )
-        self.gameDisplay.blit(text, (500, 60))
+        self.gameDisplay.blit(text, (520, 70))
 
     def things(self, thingx, thingy, thingw, thingh, color):
         # pygame draw
@@ -55,9 +55,9 @@ class Game:
         self.run()
 
     def updateHUD(self, speed):
-        font = pygame.font.SysFont(None, 60)
-        text = font.render("Speed: "+ str(speed), True, WHITE )
-        self.gameDisplay.blit(text, (550, 180))
+        font = pygame.font.SysFont(None, 50)
+        text = font.render("Speed: "+ str(speed), True, WHITE)
+        self.gameDisplay.blit(text, (520, 120))
 
     def crash(self):
         if self.dodged > self.high_score:
