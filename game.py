@@ -47,6 +47,11 @@ class Game:
         time.sleep(2)
         self.run()
 
+    def updateHUD(self, speed):
+        font = pygame.font.SysFont(None, 60)
+        text = font.render("Speed: "+ str(speed), True, WHITE )
+        self.gameDisplay.blit(text, (550,20))
+
     def crash(self):
         self.message_display('You Crashed')
 
@@ -74,7 +79,8 @@ class Game:
         stripe_y = -100
         stripe_length = 30
         stripe_gap = 70
-        speed = 1
+        speed = 10
+
         second = 0
 
         while not self.exit:
@@ -90,6 +96,8 @@ class Game:
             speed_factor = 0.1 + speed/100
             if keys[pygame.K_LEFT]:
                 playerCar.moveLeft(15 * speed_factor)
+                playerCar.leftTurn()
+                self.gameDisplay.blit(playerCar.image, (playerCar.rect.x - playerCar.rect.width/ 2, playerCar.rect.y -  playerCar.rect.height / 2 ))
             if keys[pygame.K_RIGHT]:
                 playerCar.moveRight(15 * speed_factor)
             x += x_change
@@ -128,6 +136,8 @@ class Game:
                     speed = 100
                 second = 0
             second +=1
+            self.updateHUD(speed)
+
 
             if x > gameAreaX - playerCar.rect.width or x < 0:
                 self.crash()

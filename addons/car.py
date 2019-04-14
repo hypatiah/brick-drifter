@@ -22,19 +22,18 @@ class Car(pygame.sprite.Sprite):
 
         self.angle = 0
 
-    def leftTurn(self):
-        self.image = pygame.transform.rotate(self.image, 10)
-        self.angle += 10
-
     def moveRight(self, pixels):
         self.rect.x += pixels
 
-    def leftTurn(self):
-        self.image = pygame.transform.rotate(self.image, -10)
-        self.angle -= 10
-
     def moveLeft(self, pixels):
         self.rect.x -= pixels
+
+    def leftTurn(self):
+        self.angle = 20
+        self.image = pygame.transform.rotate(self.image, self.angle)
+        rect = self.image.get_rect()
+
+
 
     def straight(self):
         self.image = pygame.transform.rotate(self.image, -self.angle)
