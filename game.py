@@ -103,7 +103,6 @@ class Game:
             speed_factor = 0.1 + speed/100
             if keys[pygame.K_LEFT]:
                 playerCar.moveLeft(15 * speed_factor)
-                playerCar.leftTurn()
                 self.gameDisplay.blit(playerCar.image, (playerCar.rect.x - playerCar.rect.width/ 2, playerCar.rect.y -  playerCar.rect.height / 2 ))
             if keys[pygame.K_RIGHT]:
                 playerCar.moveRight(15 * speed_factor)
