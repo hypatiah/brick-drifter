@@ -25,13 +25,13 @@ class Game:
 
     def show_dodged(self):
         font = pygame.font.SysFont(None, 35)
-        text = font.render("Dodged: "+ str(self.dodged), True, RED )
-        self.gameDisplay.blit(text, (520, 20))
+        text = font.render("Dodged: "+ str(self.dodged), True, WHITE )
+        self.gameDisplay.blit(text, (520, 70))
 
     def show_high_score(self):
         font = pygame.font.SysFont(None, 35)
         text = font.render("High Score: "+ str(self.high_score), True, WHITE )
-        self.gameDisplay.blit(text, (520, 70))
+        self.gameDisplay.blit(text, (520, 120))
 
     def things(self, thingx, thingy, thingw, thingh, color):
         # pygame draw
@@ -56,8 +56,8 @@ class Game:
 
     def updateHUD(self, speed):
         font = pygame.font.SysFont(None, 50)
-        text = font.render("Speed: "+ str(speed), True, WHITE)
-        self.gameDisplay.blit(text, (520, 120))
+        text = font.render("Speed: "+ str(speed), True, GRAY)
+        self.gameDisplay.blit(text, (520, 170))
 
     def crash(self):
         if self.dodged > self.high_score:
@@ -128,13 +128,17 @@ class Game:
             # self.things(thingx, thingy, thingw, thingh, color)
             self.things(thing_startx, thing_starty, thing_width, thing_height, RED)
             thing_starty += thing_speed
-            # car(x,y)
+
+            # display game name Brick Drifter
+            font = pygame.font.SysFont(None, 50)
+            text = font.render("Brick Drifter", True, RED)
+            self.gameDisplay.blit(text, (520, 20))
             self.show_dodged()
             self.show_high_score()
 
             all_sprites_list.draw(self.gameDisplay)
 
-            #Refresh Screen
+            # Refresh Screen
             pygame.display.flip()
 
             if second >= 60:
