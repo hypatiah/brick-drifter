@@ -20,11 +20,18 @@ class Game:
         self.clock = pygame.time.Clock()
         self.ticks = 60
         self.exit = False
+        self.dodged = 0
+        self.high_score = 0
 
-    def things_dodged(self, count):
+    def show_dodged(self):
         font = pygame.font.SysFont(None, 25)
-        text = font.render("Dodged: "+ str(count), True, RED )
-        self.gameDisplay.blit(text, (0,0))
+        text = font.render("Dodged: "+ str(self.dodged), True, RED )
+        self.gameDisplay.blit(text, (480,0))
+
+    def show_high_score(self):
+        font = pygame.font.SysFont(None, 25)
+        text = font.render("High Score: "+ str(self.high_score), True, WHITE )
+        self.gameDisplay.blit(text, (480, 40))
 
     def things(self, thingx, thingy, thingw, thingh, color):
         # pygame draw
@@ -48,20 +55,21 @@ class Game:
         self.run()
 
     def crash(self):
+        if self.dodged > self.high_score:
+            self.high_score = self.dodged
         self.message_display('You Crashed')
 
     def run(self):
+        self.dodged = 0
         x = (self.display_width * 0.45)
         y = (self.display_height * 0.8)
         gameAreaX = 480
         x_change = 0
         thing_startx = random.randrange(0, gameAreaX - 40)
-        print(thing_startx)
         thing_starty = -600
         thing_speed = 7
         thing_width = 40
         thing_height = 80
-        dodged = 0
 
         all_sprites_list = pygame.sprite.Group()
 
@@ -74,7 +82,7 @@ class Game:
         stripe_y = -100
         stripe_length = 30
         stripe_gap = 70
-        speed = 1
+        speed = 15
         second = 0
 
         while not self.exit:
@@ -107,7 +115,7 @@ class Game:
                 # pygame.draw.line(self.gameDisplay, WHITE, [240,stripe_y],[240,stripe_y + stripe_length],4)
                 stripe_y = stripe_y + stripe_length + stripe_gap
                 if stripe_y > 600:
-                    stripe_y -= 600 + 100
+                    stripe_y -= 700
 
             stripe_y += speed
 
@@ -115,7 +123,8 @@ class Game:
             self.things(thing_startx, thing_starty, thing_width, thing_height, RED)
             thing_starty += thing_speed
             # car(x,y)
-            self.things_dodged(dodged)
+            self.show_dodged()
+            self.show_high_score()
 
             all_sprites_list.draw(self.gameDisplay)
 
@@ -135,7 +144,7 @@ class Game:
             if thing_starty > self.display_height:
                 thing_starty = 0 - thing_height
                 thing_startx = random.randrange(0, gameAreaX - 40)
-                dodged += 1
+                self.dodged += 1
                 thing_speed += 0.5
 
             if playerCar.rect.y < thing_starty + thing_height:
